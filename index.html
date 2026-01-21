@@ -196,6 +196,31 @@
             text-align: center;
         }
         
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .checkbox-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--wijngaard-teal);
+            cursor: pointer;
+        }
+        .checkbox-label {
+            margin: 0 !important;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: #fafafa;
+        }
+        #feedbackContainer {
+            margin-top: 8px;
+        }
+        #feedbackContainer textarea {
+            margin-top: 0;
+        }
+        
         .photo-input { 
             background: #18181b;
             border: 1px solid #27272a;
@@ -419,8 +444,28 @@
             font-weight: bold;
         }
 
+        /* Feedback section */
+        .feedback-section {
+            margin-top: 15px;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid var(--wijngaard-groen);
+        }
+        .feedback-section:empty, .feedback-section:has(p:empty) {
+            display: none;
+        }
+        .feedback-section p {
+            margin: 0;
+            font-size: 0.95em;
+            color: #333;
+            line-height: 1.5;
+            font-style: italic;
+            white-space: pre-wrap;
+        }
+
         /* Groep 2 specific: Development Assessment */
-        .assessment-page { padding: 10mm 15mm; }
+        .assessment-page { padding: 8mm 14mm; }
         .assessment-header {
             display: flex;
             justify-content: space-between;
@@ -443,11 +488,12 @@
             color: #555;
         }
         .legend div { margin: 1px 0; }
+        .legend .smiley-on, .legend .smiley-off { font-size: 1.4em; }
         .legend .smiley-on { color: var(--wijngaard-teal); }
         .legend .smiley-off { opacity: 0.25; }
 
         .assessment-category {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .assessment-category:last-child {
             margin-bottom: 0;
@@ -471,16 +517,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.75em;
-            padding: 1.5px 0;
-            line-height: 1.3;
+            font-size: 0.72em;
+            padding: 1px 0;
+            line-height: 1.25;
         }
         .assessment-item span { flex: 1; }
         .assessment-rating {
-            font-size: 0.9em;
-            min-width: 50px;
+            font-size: 1.3em;
+            min-width: 65px;
             text-align: right;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            line-height: 1;
         }
         .assessment-rating .smiley-off { opacity: 0.25; }
         .assessment-rating.cat-taal .smiley-on { color: var(--color-taal); }
@@ -522,10 +569,18 @@
     <input type="text" id="inNaam" placeholder="Bijv. Jan Janssen" oninput="update()">
     
     <label>Leerkracht(en)</label>
-    <input type="text" id="inDocent" placeholder="Namen leerkrachten" oninput="update()">
+    <input type="text" id="inDocent" placeholder="Naam leerkracht(en), gescheiden door komma" oninput="update()">
     
     <label>Schooljaar</label>
     <input type="text" id="inJaar" placeholder="2024-2025" oninput="update()">
+
+    <div class="checkbox-row">
+        <input type="checkbox" id="feedbackToggle" onchange="toggleFeedback()">
+        <label for="feedbackToggle" class="checkbox-label">Persoonlijk berichtje</label>
+    </div>
+    <div id="feedbackContainer" class="hidden">
+        <textarea id="inFeedback" oninput="update()" placeholder="Bijv. Goed gedaan dit jaar!" style="height: 80px;"></textarea>
+    </div>
 
     <hr>
     <h3>Foto's</h3>
@@ -595,14 +650,14 @@
 
             <div class="meta-info">
                 <div><b>Naam:</b> <span id="outNaam">...</span></div>
-                <div><b>Leerkracht(en):</b> <span id="outDocent">...</span></div>
+                <div><b id="docentLabel1">Leerkracht:</b> <span id="outDocent">...</span></div>
                 <div><b>Schooljaar:</b> <span id="outJaar">...</span></div>
             </div>
 
             <div class="photo-section">
-                <div class="photo-grid photo-grid-single">
+                <div class="photo-grid">
                     <div class="photo-card">
-                        <div class="polaroid polaroid-large">
+                        <div class="polaroid">
                             <div class="tape"></div>
                             <div class="img-container" id="container1">
                                 <img id="img1" src="" alt="">
@@ -610,7 +665,20 @@
                             <div class="caption" id="outT1"></div>
                         </div>
                     </div>
+                    <div class="photo-card">
+                        <div class="polaroid">
+                            <div class="tape"></div>
+                            <div class="img-container" id="container2">
+                                <img id="img2" src="" alt="">
+                            </div>
+                            <div class="caption" id="outT2"></div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="feedback-section" id="feedbackSection1">
+                <p id="outFeedback1"></p>
             </div>
 
             <div class="footer-title">Kijk eens wat ik al kan</div>
@@ -629,14 +697,14 @@
 
             <div class="meta-info">
                 <div><b>Naam:</b> <span id="outNaam2">...</span></div>
-                <div><b>Leerkracht(en):</b> <span id="outDocent2">...</span></div>
+                <div><b id="docentLabel2">Leerkracht:</b> <span id="outDocent2">...</span></div>
                 <div><b>Schooljaar:</b> <span id="outJaar2">...</span></div>
             </div>
 
             <div class="photo-section">
-                <div class="photo-grid">
+                <div class="photo-grid photo-grid-single">
                     <div class="photo-card">
-                        <div class="polaroid">
+                        <div class="polaroid polaroid-large">
                             <div class="tape"></div>
                             <div class="img-container" id="container1b">
                                 <img id="img1b" src="" alt="">
@@ -644,16 +712,11 @@
                             <div class="caption" id="outT1b"></div>
                         </div>
                     </div>
-                    <div class="photo-card">
-                        <div class="polaroid">
-                            <div class="tape"></div>
-                            <div class="img-container" id="container2b">
-                                <img id="img2b" src="" alt="">
-                            </div>
-                            <div class="caption" id="outT2b"></div>
-                        </div>
-                    </div>
                 </div>
+            </div>
+
+            <div class="feedback-section" id="feedbackSection2">
+                <p id="outFeedback2"></p>
             </div>
 
             <div class="footer-title">Kijk eens wat ik al kan</div>
@@ -755,6 +818,18 @@
         // Set copyright year
         document.getElementById('copyrightYear').textContent = new Date().getFullYear();
         
+        // Auto-detect school year
+        const now = new Date();
+        const month = now.getMonth(); // 0-11
+        const year = now.getFullYear();
+        let schoolYear;
+        if (month < 7) { // Before August (0-6 = Jan-Jul)
+            schoolYear = `${year - 1} - ${year}`;
+        } else { // August onwards (7-11 = Aug-Dec)
+            schoolYear = `${year} - ${year + 1}`;
+        }
+        document.getElementById('inJaar').value = schoolYear;
+        
         // Build assessment inputs
         buildRatingInputs('taalItems', assessmentData.taal, 'taal');
         buildRatingInputs('rekenItems', assessmentData.reken, 'reken');
@@ -763,13 +838,16 @@
         
         updateAssessmentOutput();
         
-        // Initialize correct view (Groep 1 by default - hide photo 2)
-        document.getElementById('photo2container').classList.add('hidden');
+        // Initialize correct view (Groep 1 by default - show both photos)
+        // photo2 is visible by default for Groep 1
         
         // Initialize drag on all containers
         initDrag(document.getElementById('container1'), 1);
+        initDrag(document.getElementById('container2'), 2);
         initDrag(document.getElementById('container1b'), 1);
-        initDrag(document.getElementById('container2b'), 2);
+        
+        // Apply initial values
+        update();
     });
 
     function buildRatingInputs(containerId, items, category) {
@@ -850,40 +928,69 @@
             groep2.classList.add('hidden');
             assessmentInputs.classList.add('hidden');
             photo1.classList.remove('hidden');
-            photo2.classList.add('hidden');
+            photo2.classList.remove('hidden');
             document.getElementById('reportTitle').textContent = 'Groep 1';
         } else {
             groep1.classList.add('hidden');
             groep2.classList.remove('hidden');
             assessmentInputs.classList.remove('hidden');
             photo1.classList.remove('hidden');
-            photo2.classList.remove('hidden');
+            photo2.classList.add('hidden');
         }
         update();
+    }
+
+    function toggleFeedback() {
+        const checkbox = document.getElementById('feedbackToggle');
+        const container = document.getElementById('feedbackContainer');
+        
+        if (checkbox.checked) {
+            container.classList.remove('hidden');
+        } else {
+            container.classList.add('hidden');
+            document.getElementById('inFeedback').value = '';
+            update();
+        }
     }
 
     function update() {
         const naam = document.getElementById('inNaam').value || '...';
         const docent = document.getElementById('inDocent').value || '...';
         const jaar = document.getElementById('inJaar').value || '...';
+        const feedback = document.getElementById('inFeedback').value || '';
         
         // Update Groep 1
         document.getElementById('outNaam').textContent = naam;
         document.getElementById('outDocent').textContent = docent;
         document.getElementById('outJaar').textContent = jaar;
+        document.getElementById('outFeedback1').textContent = feedback;
         
         // Update Groep 2
         document.getElementById('outNaam2').textContent = naam;
         document.getElementById('outDocent2').textContent = docent;
         document.getElementById('outJaar2').textContent = jaar;
+        document.getElementById('outFeedback2').textContent = feedback;
+        
+        // Show/hide feedback sections based on content
+        document.getElementById('feedbackSection1').style.display = feedback ? 'block' : 'none';
+        document.getElementById('feedbackSection2').style.display = feedback ? 'block' : 'none';
+        
+        // Update leerkracht label based on comma
+        const docentValue = document.getElementById('inDocent').value;
+        const labelText = docentValue.includes(',') ? 'Leerkrachten:' : 'Leerkracht:';
+        document.getElementById('docentLabel1').textContent = labelText;
+        document.getElementById('docentLabel2').textContent = labelText;
         
         // Update captions
         const text1 = document.getElementById('t1').value || '';
         const text2 = document.getElementById('t2').value || '';
         
+        // Groep 1: both photos
         document.getElementById('outT1').textContent = text1;
+        document.getElementById('outT2').textContent = text2;
+        
+        // Groep 2: only photo 1
         document.getElementById('outT1b').textContent = text1;
-        document.getElementById('outT2b').textContent = text2;
     }
 
     // Image state for zoom and position
@@ -905,15 +1012,15 @@
         const scale = baseScale * (state.zoom / 100);
         const transform = `translate(calc(-50% + ${state.x}px), calc(-50% + ${state.y}px)) scale(${scale})`;
         
-        // Apply to Groep 1 (only photo 1)
-        if (num === 1) {
-            const img1 = document.getElementById('img1');
-            if (img1) img1.style.transform = transform;
-        }
+        // Apply to Groep 1 (both photos)
+        const img = document.getElementById('img' + num);
+        if (img) img.style.transform = transform;
         
-        // Apply to Groep 2
-        const imgB = document.getElementById('img' + num + 'b');
-        if (imgB) imgB.style.transform = transform;
+        // Apply to Groep 2 (only photo 1)
+        if (num === 1) {
+            const img1b = document.getElementById('img1b');
+            if (img1b) img1b.style.transform = transform;
+        }
     }
 
     // Drag functionality
@@ -962,7 +1069,9 @@
             const tempImg = new Image();
             tempImg.onload = function() {
                 // Calculate base scale to fit image in container
-                const containerSize = num === 1 ? 280 : 200;
+                // Groep 1 uses 200px containers, Groep 2 uses 280px for single photo
+                const containerSize = 200; // Both use 200 for their respective layouts
+                const largeContainerSize = 280;
                 const scaleX = containerSize / tempImg.width;
                 const scaleY = containerSize / tempImg.height;
                 const baseScale = Math.min(scaleX, scaleY);
@@ -974,20 +1083,25 @@
                 
                 const initialTransform = `translate(-50%, -50%) scale(${baseScale})`;
                 
-                // Set for Groep 1 (only photo 1)
-                if (num === 1) {
-                    const img1 = document.getElementById('img1');
-                    if (img1) {
-                        img1.src = reader.result;
-                        img1.style.transform = initialTransform;
-                    }
+                // Set for Groep 1 (both photos)
+                const img = document.getElementById('img' + num);
+                if (img) {
+                    img.src = reader.result;
+                    img.style.transform = initialTransform;
                 }
                 
-                // Set for Groep 2
-                const imgB = document.getElementById('img' + num + 'b');
-                if (imgB) {
-                    imgB.src = reader.result;
-                    imgB.style.transform = initialTransform;
+                // Set for Groep 2 (only photo 1, with larger scale)
+                if (num === 1) {
+                    const scaleXLarge = largeContainerSize / tempImg.width;
+                    const scaleYLarge = largeContainerSize / tempImg.height;
+                    const baseScaleLarge = Math.min(scaleXLarge, scaleYLarge);
+                    const initialTransformLarge = `translate(-50%, -50%) scale(${baseScaleLarge})`;
+                    
+                    const img1b = document.getElementById('img1b');
+                    if (img1b) {
+                        img1b.src = reader.result;
+                        img1b.style.transform = initialTransformLarge;
+                    }
                 }
             };
             tempImg.src = reader.result;
