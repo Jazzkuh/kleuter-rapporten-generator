@@ -170,6 +170,40 @@
             font-size: 0.875rem;
             transition: background 0.15s;
         }
+        
+        .btn-export {
+            background: #ff9800;
+            color: white; 
+            border: none; 
+            padding: 12px 16px; 
+            width: 100%; 
+            border-radius: 6px; 
+            font-weight: 500; 
+            cursor: pointer; 
+            margin-top: 12px; 
+            font-size: 0.875rem;
+            transition: background 0.15s;
+        }
+        .btn-export:hover {
+            background: #f57c00;
+        }
+        .btn-export:active {
+            background: #e65100;
+        }
+        .btn-export:disabled {
+            background: #3f3f46;
+            cursor: not-allowed;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 24px;
+        }
+        .btn-group .btn-save {
+            margin-top: 0;
+            flex: 1;
+        }
         .btn-save:hover { 
             background: #008f89;
         }
@@ -633,6 +667,13 @@
     </div>
 
     <button class="btn-save" onclick="downloadPDF()">OPSLAAN ALS PDF</button>
+    
+    <button class="btn-export" onclick="exportJSON()">EXPORTEER JSON</button>
+    
+    <div style="margin-top: 12px;">
+        <label style="margin-top: 0;">Import JSON</label>
+        <input type="file" accept=".json" onchange="importJSON(event)" style="margin-top: 6px;">
+    </div>
     
     <div class="copyright">© <span id="copyrightYear"></span> Jazz Bauer</div>
 </div>
@@ -1147,6 +1188,123 @@
         
         btn.textContent = 'OPSLAAN ALS PDF';
         btn.disabled = false;
+    }
+    
+    function exportJSON() {
+        // Collect all form data
+        const data = {
+            reportType: document.getElementById('reportType').value,
+            naam: document.getElementById('inNaam').value,
+            docent: document.getElementById('inDocent').value,
+            jaar: document.getElementById('inJaar').value,
+            feedback: document.getElementById('inFeedback').value,
+            feedbackEnabled: document.getElementById('feedbackToggle').checked,
+            foto1Text: document.getElementById('t1').value,
+            foto2Text: document.getElementById('t2').value,
+            zoom1: document.getElementById('zoom1').value,
+            zoom2: document.getElementById('zoom2').value,
+            imageState: imageState,
+            // Store base64 images
+            img1: document.getElementById('img1').src,
+            img2: document.getElementById('img2').src,
+            img1b: document.getElementById('img1b').src,
+            // Assessment data
+            assessmentData: assessmentData
+        };
+        
+        // Create JSON file
+        const jsonString = JSON.stringify(data, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        // Create download link
+        const a = document.createElement('a');
+        a.href = url;
+        const filename = data.naam ? `rapport_${data.naam.replace(/\s+/g, '_')}.json` : 'rapport.json';
+        a.download = filename;
+        a.click();
+        
+        URL.revokeObjectURL(url);
+    }
+    
+    function importJSON(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const data = JSON.parse(e.target.result);
+                
+                // Restore form data
+                document.getElementById('reportType').value = data.reportType || 'groep1';
+                switchReportType(); // Update visibility
+                
+                document.getElementById('inNaam').value = data.naam || '';
+                document.getElementById('inDocent').value = data.docent || '';
+                document.getElementById('inJaar').value = data.jaar || '';
+                document.getElementById('inFeedback').value = data.feedback || '';
+                
+                // Restore feedback toggle
+                const feedbackToggle = document.getElementById('feedbackToggle');
+                feedbackToggle.checked = data.feedbackEnabled || false;
+                toggleFeedback();
+                
+                document.getElementById('t1').value = data.foto1Text || '';
+                document.getElementById('t2').value = data.foto2Text || '';
+                
+                // Restore zoom values
+                document.getElementById('zoom1').value = data.zoom1 || 100;
+                document.getElementById('zoom2').value = data.zoom2 || 100;
+                document.getElementById('zoom1val').textContent = data.zoom1 || 100;
+                document.getElementById('zoom2val').textContent = data.zoom2 || 100;
+                
+                // Restore image state
+                if (data.imageState) {
+                    imageState[1] = data.imageState[1] || { zoom: 100, x: 0, y: 0, baseScale: 1 };
+                    imageState[2] = data.imageState[2] || { zoom: 100, x: 0, y: 0, baseScale: 1 };
+                }
+                
+                // Restore images
+                if (data.img1 && data.img1 !== '') {
+                    document.getElementById('img1').src = data.img1;
+                    document.getElementById('img1b').src = data.img1;
+                    applyImageTransform(1);
+                }
+                if (data.img2 && data.img2 !== '') {
+                    document.getElementById('img2').src = data.img2;
+                    applyImageTransform(2);
+                }
+                
+                // Restore assessment data
+                if (data.assessmentData) {
+                    assessmentData.taal = data.assessmentData.taal || assessmentData.taal;
+                    assessmentData.reken = data.assessmentData.reken || assessmentData.reken;
+                    assessmentData.motoriek = data.assessmentData.motoriek || assessmentData.motoriek;
+                    assessmentData.werkhouding = data.assessmentData.werkhouding || assessmentData.werkhouding;
+                    
+                    // Rebuild rating inputs to show correct ratings
+                    buildRatingInputs('taalItems', assessmentData.taal, 'taal');
+                    buildRatingInputs('rekenItems', assessmentData.reken, 'reken');
+                    buildRatingInputs('motoriekItems', assessmentData.motoriek, 'motoriek');
+                    buildRatingInputs('werkhoudingItems', assessmentData.werkhouding, 'werkhouding');
+                    
+                    updateAssessmentOutput();
+                }
+                
+                // Update the display
+                update();
+                
+                alert('Rapport succesvol geïmporteerd!');
+            } catch (err) {
+                console.error(err);
+                alert('Fout bij het importeren van het JSON bestand. Controleer of het bestand geldig is.');
+            }
+        };
+        reader.readAsText(file);
+        
+        // Clear the file input so the same file can be imported again if needed
+        event.target.value = '';
     }
 </script>
 
