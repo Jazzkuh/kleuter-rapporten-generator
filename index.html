@@ -347,11 +347,11 @@
         }
         .polaroid {
             background: #e8e8e8;
-            padding: 10px 10px 12px 10px;
+            padding: 12px 12px 15px 12px;
             box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
             position: relative;
             transform: rotate(-1deg);
-            width: 220px;
+            width: 304px;
         }
         .polaroid-large {
             padding: 12px 12px 15px 12px;
@@ -369,8 +369,8 @@
             top: -12px;
             left: 50%;
             transform: translateX(-50%) rotate(-2deg);
-            width: 80px;
-            height: 24px;
+            width: 100px;
+            height: 28px;
             background: var(--wijngaard-groen);
             opacity: 0.7;
             z-index: 10;
@@ -403,8 +403,8 @@
             justify-content: center; 
             overflow: hidden;
             background: #d0d0d0;
-            width: 200px;
-            height: 200px;
+            width: 280px;
+            height: 280px;
             position: relative;
             cursor: grab;
         }
@@ -1069,9 +1069,8 @@
             const tempImg = new Image();
             tempImg.onload = function() {
                 // Calculate base scale to fit image in container
-                // Groep 1 uses 200px containers, Groep 2 uses 280px for single photo
-                const containerSize = 200; // Both use 200 for their respective layouts
-                const largeContainerSize = 280;
+                // Both Groep 1 and Groep 2 now use 280px containers
+                const containerSize = 280;
                 const scaleX = containerSize / tempImg.width;
                 const scaleY = containerSize / tempImg.height;
                 const baseScale = Math.min(scaleX, scaleY);
@@ -1090,17 +1089,12 @@
                     img.style.transform = initialTransform;
                 }
                 
-                // Set for Groep 2 (only photo 1, with larger scale)
+                // Set for Groep 2 (only photo 1, same size now)
                 if (num === 1) {
-                    const scaleXLarge = largeContainerSize / tempImg.width;
-                    const scaleYLarge = largeContainerSize / tempImg.height;
-                    const baseScaleLarge = Math.min(scaleXLarge, scaleYLarge);
-                    const initialTransformLarge = `translate(-50%, -50%) scale(${baseScaleLarge})`;
-                    
                     const img1b = document.getElementById('img1b');
                     if (img1b) {
                         img1b.src = reader.result;
-                        img1b.style.transform = initialTransformLarge;
+                        img1b.style.transform = initialTransform;
                     }
                 }
             };
