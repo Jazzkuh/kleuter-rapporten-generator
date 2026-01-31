@@ -569,6 +569,116 @@
         .assessment-rating.cat-motoriek .smiley-on { color: var(--color-motoriek); }
         .assessment-rating.cat-werkhouding .smiley-on { color: var(--color-werkhouding); }
 
+        /* Help Button */
+        .info-toggle {
+            background: #18181b;
+            border: 1px solid #27272a;
+            color: #fafafa;
+            padding: 10px 12px;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0;
+            font-size: 0.875rem;
+            transition: background 0.15s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .info-toggle:hover {
+            background: #27272a;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal {
+            background: white;
+            border-radius: 8px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin: 20px;
+        }
+        .modal-header {
+            background: var(--wijngaard-groen);
+            color: white;
+            padding: 20px 24px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: white;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background 0.15s;
+        }
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .modal-content {
+            padding: 24px;
+            color: #333;
+        }
+        .modal-content h4 {
+            color: var(--wijngaard-groen);
+            font-size: 1.1rem;
+            margin: 24px 0 12px 0;
+            font-weight: 600;
+        }
+        .modal-content h4:first-child {
+            margin-top: 0;
+        }
+        .modal-content ul {
+            margin: 8px 0 16px 0;
+            padding-left: 24px;
+            line-height: 1.8;
+        }
+        .modal-content li {
+            margin: 8px 0;
+        }
+        .modal-content strong {
+            color: var(--wijngaard-groen);
+        }
+        .modal-content code {
+            background: #f4f4f5;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--wijngaard-groen);
+            font-family: 'Courier New', monospace;
+        }
+
         /* Print styles */
         @media print {
             body { background: white; }
@@ -590,6 +700,13 @@
 
 <div class="sidebar">
     <h2>Rapport Maker</h2>
+    
+    <button class="info-toggle" onclick="showHelp()">
+        <span>Handleiding</span>
+        <span>?</span>
+    </button>
+    
+    <hr>
     
     <label>Type Rapport</label>
     <select id="reportType" onchange="switchReportType()">
@@ -981,6 +1098,17 @@
         update();
     }
 
+    function showHelp() {
+        document.getElementById('helpModal').classList.remove('hidden');
+    }
+
+    function closeHelp(event) {
+        // Close if clicking overlay or calling directly
+        if (!event || event.target.classList.contains('modal-overlay')) {
+            document.getElementById('helpModal').classList.add('hidden');
+        }
+    }
+
     function toggleFeedback() {
         const checkbox = document.getElementById('feedbackToggle');
         const container = document.getElementById('feedbackContainer');
@@ -1305,6 +1433,56 @@
         event.target.value = '';
     }
 </script>
+
+
+<!-- Help Modal -->
+<div id="helpModal" class="modal-overlay hidden" onclick="closeHelp(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>Handleiding Rapport Maker</h3>
+            <button class="modal-close" onclick="closeHelp()">&times;</button>
+        </div>
+        <div class="modal-content">
+            <h4>Algemeen</h4>
+            <ul>
+                <li>Kies eerst het type rapport: <strong>Groep 1</strong> (2 foto's) of <strong>Groep 2</strong> (1 foto + beoordeling)</li>
+                <li>Vul de gegevens van de leerling in (naam, leerkracht, jaar)</li>
+                <li>Het rapport wordt direct getoond aan de rechterkant van het scherm</li>
+            </ul>
+
+            <h4>Foto's Toevoegen</h4>
+            <ul>
+                <li>Klik op <code>Bestand kiezen</code> om een foto van uw computer te selecteren</li>
+                <li>Gebruik de <strong>Zoom schuif</strong> om de foto groter of kleiner te maken</li>
+                <li><strong>Sleep met uw muis</strong> over de foto om deze te verplaatsen</li>
+                <li>Typ een beschrijving in het tekstveld onder de foto</li>
+            </ul>
+
+            <h4>Beoordeling (alleen Groep 2)</h4>
+            <ul>
+                <li>Klik op de cijfers <code>1</code>, <code>2</code>, of <code>3</code> om smileys toe te kennen aan elk punt</li>
+                <li><strong>1 smiley</strong> = het kind is hier nog niet mee bezig</li>
+                <li><strong>2 smileys</strong> = dit is in ontwikkeling</li>
+                <li><strong>3 smileys</strong> = het kind beheerst dit al</li>
+            </ul>
+
+            <h4>Opslaan en Laden</h4>
+            <ul>
+                <li><strong>OPSLAAN ALS PDF</strong> (groene knop): Maakt een PDF bestand dat u kunt afdrukken of mailen</li>
+                <li><strong>EXPORTEER JSON</strong> (oranje knop): Slaat het rapport op zodat u later verder kunt werken</li>
+                <li><strong>Import JSON</strong> (bestand kiezen): Laad een eerder opgeslagen rapport terug om aan te passen</li>
+            </ul>
+
+            <h4>Handige Tips</h4>
+            <ul>
+                <li>Het onderwijsjaar wordt automatisch ingevuld met het huidige schooljaar</li>
+                <li>Heeft u meerdere leerkrachten? Scheid de namen met een komma</li>
+                <li>JSON bestanden bewaren ALLES: foto's, teksten, zoom instellingen én beoordelingen</li>
+                <li>U kunt altijd terug naar deze handleiding door op de <strong>Handleiding</strong> knop te klikken</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
