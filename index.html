@@ -215,6 +215,56 @@
             background: #3f3f46;
             cursor: not-allowed;
         }
+
+        .json-dropzone {
+            margin-top: 14px;
+            border: 2px dashed #27272a;
+            border-radius: 8px;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #18181b;
+        }
+        .json-dropzone:hover {
+            border-color: #3f3f46;
+            background: #1c1c1f;
+        }
+        .json-dropzone.dragover {
+            border-color: var(--wijngaard-teal);
+            background: rgba(0, 161, 154, 0.08);
+        }
+        .json-dropzone.loaded {
+            border-color: var(--wijngaard-teal);
+            border-style: solid;
+        }
+        .json-dropzone i {
+            font-size: 1.3rem;
+            color: #52525b;
+            transition: color 0.2s;
+        }
+        .json-dropzone:hover i,
+        .json-dropzone.dragover i {
+            color: var(--wijngaard-teal);
+        }
+        .json-dropzone span {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #a1a1aa;
+        }
+        .json-dropzone small {
+            font-size: 0.68rem;
+            color: #52525b;
+        }
+        .json-dropzone.loaded i::before {
+            content: "\\f058";
+        }
+        .json-dropzone.loaded i {
+            color: var(--wijngaard-teal);
+        }
         
         hr { 
             border: none;
@@ -693,244 +743,6 @@
             }
         }
 
-        /* Admin Panel */
-        .admin-btn {
-            background: #18181b;
-            border: 1px solid #27272a;
-            color: #71717a;
-            padding: 10px 12px;
-            width: 100%;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: pointer;
-            margin-top: 12px;
-            font-size: 0.875rem;
-            transition: all 0.15s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .admin-btn:hover { background: #27272a; color: #a1a1aa; }
-        .admin-btn i { font-size: 0.8rem; }
-
-        .admin-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1001;
-        }
-        .admin-modal {
-            background: #09090b;
-            border: 1px solid #27272a;
-            border-radius: 12px;
-            max-width: 520px;
-            width: 100%;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            margin: 20px;
-        }
-        .admin-modal::-webkit-scrollbar { width: 8px; }
-        .admin-modal::-webkit-scrollbar-track { background: transparent; }
-        .admin-modal::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
-        .admin-modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #27272a;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .admin-modal-header h3 {
-            margin: 0;
-            font-size: 1rem;
-            color: #fafafa;
-            text-transform: none;
-            letter-spacing: normal;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .admin-modal-header h3 i { color: var(--wijngaard-teal); font-size: 0.9rem; }
-        .admin-modal-close {
-            background: none;
-            border: 1px solid #27272a;
-            color: #71717a;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.15s;
-        }
-        .admin-modal-close:hover { background: #27272a; color: #fafafa; }
-        .admin-modal-body {
-            padding: 24px;
-        }
-        .admin-login-body {
-            padding: 40px 36px;
-            text-align: center;
-        }
-        .admin-login-body .pw-icon {
-            width: 56px; height: 56px;
-            background: #27272a;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 1.1rem;
-            color: #a1a1aa;
-        }
-        .admin-login-body h3 {
-            color: #fafafa; font-size: 1.1rem; margin: 0 0 6px 0;
-            text-transform: none; letter-spacing: normal;
-        }
-        .admin-login-body p {
-            color: #71717a; font-size: 0.8rem; margin: 0 0 20px 0;
-        }
-        .admin-section {
-            margin-bottom: 24px;
-        }
-        .admin-section:last-child { margin-bottom: 0; }
-        .admin-section-title {
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #71717a;
-            margin: 0 0 14px 0;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #27272a;
-        }
-        .admin-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 14px;
-            gap: 12px;
-        }
-        .admin-row:last-child { margin-bottom: 0; }
-        .admin-row label {
-            margin: 0;
-            font-size: 0.8rem;
-            color: #a1a1aa;
-            font-weight: 400;
-            white-space: nowrap;
-        }
-        .admin-row input[type="color"] {
-            width: 40px; height: 32px;
-            border: 1px solid #3f3f46;
-            border-radius: 6px;
-            background: #18181b;
-            cursor: pointer;
-            padding: 2px;
-        }
-        .admin-row input[type="text"],
-        .admin-row input[type="number"],
-        .admin-row select {
-            width: 160px;
-            padding: 8px 10px;
-            border-radius: 6px;
-            border: 1px solid #27272a;
-            background: #18181b;
-            color: #fafafa;
-            font-size: 0.8rem;
-            font-family: inherit;
-        }
-        .admin-row input:focus, .admin-row select:focus {
-            outline: none;
-            border-color: #3f3f46;
-        }
-        .admin-row select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2371717a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            padding-right: 28px;
-            cursor: pointer;
-        }
-        .color-pair {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .color-pair .color-hex {
-            font-size: 0.7rem;
-            color: #52525b;
-            font-family: 'Courier New', monospace;
-        }
-        .admin-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px solid #27272a;
-        }
-        .admin-actions button {
-            flex: 1;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.15s;
-            border: 1px solid #27272a;
-        }
-        .admin-btn-apply {
-            background: var(--wijngaard-teal) !important;
-            color: white !important;
-            border-color: var(--wijngaard-teal) !important;
-        }
-        .admin-btn-apply:hover { opacity: 0.9; }
-        .admin-btn-reset {
-            background: #18181b !important;
-            color: #a1a1aa !important;
-        }
-        .admin-btn-reset:hover { background: #27272a !important; }
-        .admin-toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: #18181b;
-            border: 1px solid #27272a;
-            color: #fafafa;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            z-index: 1100;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            animation: toast-in 0.3s ease;
-        }
-        .admin-toast i { color: var(--wijngaard-teal); }
-        @keyframes toast-in {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .admin-doelen-textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 10px 12px;
-            border-radius: 6px;
-            border: 1px solid #27272a;
-            background: #18181b;
-            color: #fafafa;
-            font-size: 0.75rem;
-            font-family: inherit;
-            line-height: 1.6;
-            resize: vertical;
-        }
-        .admin-doelen-textarea:focus {
-            outline: none;
-            border-color: #3f3f46;
-        }
-
         /* Hidden elements */
         .hidden { display: none !important; }
 
@@ -1171,18 +983,16 @@
     
     <button class="btn-export" onclick="exportJSON()">EXPORTEER JSON</button>
     
-    <div style="margin-top: 12px;">
-        <label style="margin-top: 0;">Import JSON</label>
-        <input type="file" accept=".json" onchange="importJSON(event)" style="margin-top: 6px;">
+    <div class="json-dropzone" id="jsonDropzone" onclick="document.getElementById('jsonFileInput').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="event.preventDefault();this.classList.remove('dragover');handleJsonDrop(event)">
+        <input type="file" accept=".json" id="jsonFileInput" onchange="importJSON(event)" style="display:none;">
+        <i class="fa-solid fa-file-arrow-up"></i>
+        <span>Import JSON</span>
+        <small>Klik of sleep een bestand hierheen</small>
     </div>
     
     <div class="copyright">© <span id="copyrightYear"></span> Jazz Bauer</div>
     
-    <button class="admin-btn" onclick="openAdmin()">
-        <span><i class="fa-solid fa-gear"></i>&ensp;Admin</span>
-        <i class="fa-solid fa-chevron-right"></i>
-    </button>
-</div>
+    </div>
 
 <div class="main-content">
     <!-- Groep 1: Photo Report -->
@@ -1744,10 +1554,18 @@
         URL.revokeObjectURL(url);
     }
     
+    function handleJsonDrop(event) {
+        const file = event.dataTransfer.files[0];
+        if (!file || !file.name.endsWith('.json')) return;
+        const fakeEvent = { target: { files: [file], value: file.name } };
+        importJSON(fakeEvent);
+    }
+
     function importJSON(event) {
         const file = event.target.files[0];
         if (!file) return;
         
+        const dropzone = document.getElementById('jsonDropzone');
         const reader = new FileReader();
         reader.onload = function(e) {
             try {
@@ -1811,6 +1629,18 @@
                 
                 // Update the display
                 update();
+                
+                // Visual feedback on dropzone
+                dropzone.classList.add('loaded');
+                dropzone.querySelector('span').textContent = file.name;
+                dropzone.querySelector('small').textContent = 'Rapport geladen!';
+                setTimeout(() => {
+                    dropzone.classList.remove('loaded');
+                    dropzone.querySelector('span').textContent = 'Import JSON';
+                    dropzone.querySelector('small').textContent = 'Klik of sleep een bestand hierheen';
+                    const icon = dropzone.querySelector('i');
+                    icon.className = 'fa-solid fa-file-arrow-up';
+                }, 3000);
             } catch (err) {
                 console.error(err);
                 alert('Fout bij het importeren van het JSON bestand. Controleer of het bestand geldig is.');
@@ -1823,841 +1653,6 @@
     }
 </script>
 
-
-<!-- Admin Modal -->
-<div id="adminModal" class="admin-overlay hidden" onclick="if(event.target===this) closeAdmin()">
-    <!-- Login View -->
-    <div class="admin-modal" id="adminLoginView">
-        <div class="admin-login-body">
-            <div class="pw-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <h3>Admin Toegang</h3>
-            <p>Voer het admin wachtwoord in</p>
-            <input type="password" id="adminPwInput" placeholder="Admin wachtwoord" style="width:100%;padding:12px 14px;border-radius:6px;border:1px solid #27272a;background:#18181b;color:#fafafa;font-size:0.95rem;font-family:inherit;text-align:center;letter-spacing:0.15em;" onkeydown="if(event.key==='Enter') checkAdminPassword()">
-            <button class="pw-btn" style="width:100%;padding:12px;margin-top:14px;background:var(--wijngaard-teal);color:white;border:none;border-radius:6px;font-size:0.875rem;font-weight:500;cursor:pointer;" onclick="checkAdminPassword()">Inloggen</button>
-            <div class="pw-msg" id="adminPwMsg" style="color:#e53935;font-size:0.8rem;margin-top:12px;min-height:1.2em;"></div>
-        </div>
-    </div>
-
-    <!-- Admin Panel View (hidden until authenticated) -->
-    <div class="admin-modal hidden" id="adminPanelView">
-        <div class="admin-modal-header">
-            <h3><i class="fa-solid fa-palette"></i> Stijl Instellingen</h3>
-            <button class="admin-modal-close" onclick="closeAdmin()">&times;</button>
-        </div>
-        <div class="admin-modal-body">
-            
-            <!-- Colors -->
-            <div class="admin-section">
-                <div class="admin-section-title">Kleuren</div>
-                
-                <div class="admin-row">
-                    <label>Hoofdkleur (groen)</label>
-                    <div class="color-pair">
-                        <input type="color" id="adminColorGroen" value="#005a55" onchange="updateHex(this, 'hexGroen')">
-                        <span class="color-hex" id="hexGroen">#005a55</span>
-                    </div>
-                </div>
-                <div class="admin-row">
-                    <label>Accent kleur (teal)</label>
-                    <div class="color-pair">
-                        <input type="color" id="adminColorTeal" value="#00a19a" onchange="updateHex(this, 'hexTeal')">
-                        <span class="color-hex" id="hexTeal">#00a19a</span>
-                    </div>
-                </div>
-                <div class="admin-row">
-                    <label>Taal categorie</label>
-                    <div class="color-pair">
-                        <input type="color" id="adminColorTaal" value="#e53935" onchange="updateHex(this, 'hexTaal')">
-                        <span class="color-hex" id="hexTaal">#e53935</span>
-                    </div>
-                </div>
-                <div class="admin-row">
-                    <label>Reken categorie</label>
-                    <div class="color-pair">
-                        <input type="color" id="adminColorReken" value="#43a047" onchange="updateHex(this, 'hexReken')">
-                        <span class="color-hex" id="hexReken">#43a047</span>
-                    </div>
-                </div>
-                <div class="admin-row">
-                    <label>Motoriek categorie</label>
-                    <div class="color-pair">
-                        <input type="color" id="adminColorMotoriek" value="#8e24aa" onchange="updateHex(this, 'hexMotoriek')">
-                        <span class="color-hex" id="hexMotoriek">#8e24aa</span>
-                    </div>
-                </div>
-                <div class="admin-row">
-                    <label>Werkhouding categorie</label>
-                    <div class="color-pair">
-                        <input type="color" id="adminColorWerkhouding" value="#fb8c00" onchange="updateHex(this, 'hexWerkhouding')">
-                        <span class="color-hex" id="hexWerkhouding">#fb8c00</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Typography -->
-            <div class="admin-section">
-                <div class="admin-section-title">Typografie</div>
-                
-                <div class="admin-row">
-                    <label>Lettertype rapport</label>
-                    <select id="adminFont">
-                        <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">Standaard (System)</option>
-                        <option value="Georgia, 'Times New Roman', serif">Georgia (Serif)</option>
-                        <option value="'Courier New', monospace">Courier (Mono)</option>
-                        <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
-                        <option value="Verdana, sans-serif">Verdana</option>
-                        <option value="'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino</option>
-                        <option value="'Comic Sans MS', cursive">Comic Sans</option>
-                    </select>
-                </div>
-                <div class="admin-row">
-                    <label>Titel grootte</label>
-                    <select id="adminTitleSize">
-                        <option value="1.8em">Klein</option>
-                        <option value="2.2em" selected>Normaal</option>
-                        <option value="2.6em">Groot</option>
-                        <option value="3em">Extra groot</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Report Layout -->
-            <div class="admin-section">
-                <div class="admin-section-title">Rapport Layout</div>
-                
-                <div class="admin-row">
-                    <label>Tape kleur</label>
-                    <div class="color-pair">
-                        <input type="color" id="adminTapeColor" value="#005a55" onchange="updateHex(this, 'hexTape')">
-                        <span class="color-hex" id="hexTape">#005a55</span>
-                    </div>
-                </div>
-                <div class="admin-row">
-                    <label>Polaroid achtergrond</label>
-                    <div class="color-pair">
-                        <input type="color" id="adminPolaroidBg" value="#e8e8e8" onchange="updateHex(this, 'hexPolaroid')">
-                        <span class="color-hex" id="hexPolaroid">#e8e8e8</span>
-                    </div>
-                </div>
-                <div class="admin-row">
-                    <label>Footer tekst</label>
-                    <input type="text" id="adminFooterText" value="Kijk eens wat ik al kan!" style="width: 200px;">
-                </div>
-                <div class="admin-row">
-                    <label>Pagina achtergrond</label>
-                    <div class="color-pair">
-                        <input type="color" id="adminPageBg" value="#ffffff" onchange="updateHex(this, 'hexPageBg')">
-                        <span class="color-hex" id="hexPageBg">#ffffff</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Password Management -->
-            <div class="admin-section">
-                <div class="admin-section-title">Wachtwoorden</div>
-                
-                <div class="admin-row">
-                    <label>Login wachtwoord</label>
-                    <input type="text" id="adminNewLoginPw" placeholder="Nieuw wachtwoord">
-                </div>
-                <div class="admin-row">
-                    <label>Admin wachtwoord</label>
-                    <input type="text" id="adminNewAdminPw" placeholder="Nieuw wachtwoord">
-                </div>
-            </div>
-
-            <!-- Logo & Branding -->
-            <div class="admin-section">
-                <div class="admin-section-title"><i class="fa-solid fa-image"></i>&ensp;Logo & Branding</div>
-                
-                <div class="admin-row" style="flex-direction: column; align-items: stretch;">
-                    <label style="margin-bottom: 8px;">School logo</label>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <img id="adminLogoPreview" src="" alt="Logo" style="max-height: 40px; max-width: 120px; border-radius: 4px; background: #27272a; padding: 4px;">
-                        <label style="margin: 0; padding: 8px 14px; background: #18181b; border: 1px solid #27272a; border-radius: 6px; cursor: pointer; font-size: 0.8rem; color: #a1a1aa; white-space: nowrap;">
-                            <i class="fa-solid fa-upload"></i>&ensp;Upload
-                            <input type="file" accept="image/*" id="adminLogoInput" onchange="previewAdminLogo(event)" style="display: none;">
-                        </label>
-                    </div>
-                </div>
-                <div class="admin-row" style="margin-top: 14px;">
-                    <label>Schoolnaam (titel)</label>
-                    <input type="text" id="adminSchoolName" value="Rapport Generator" style="width: 200px;">
-                </div>
-                <div class="admin-row">
-                    <label>Pagina titel (browser tab)</label>
-                    <input type="text" id="adminPageTitle" value="Rapport Generator - De Wijngaard" style="width: 200px;">
-                </div>
-                <div class="admin-row">
-                    <label>Copyright naam</label>
-                    <input type="text" id="adminCopyright" value="Jazz Bauer" style="width: 200px;">
-                </div>
-            </div>
-
-            <!-- Doelen / Assessment Items -->
-            <div class="admin-section">
-                <div class="admin-section-title"><i class="fa-solid fa-list-check"></i>&ensp;Doelen (Beoordelingspunten)</div>
-                <p style="font-size: 0.75rem; color: #52525b; margin: 0 0 12px 0;">Eén doel per regel. Voeg toe of verwijder regels om doelen aan te passen.</p>
-                
-                <div class="admin-doelen-category" style="margin-bottom: 16px;">
-                    <label style="margin: 0 0 6px 0; font-size: 0.8rem; display: flex; align-items: center; gap: 6px;">
-                        <span style="width: 10px; height: 10px; border-radius: 2px; background: var(--color-taal); display: inline-block;"></span>
-                        Taalontwikkeling
-                    </label>
-                    <textarea id="adminDoelenTaal" class="admin-doelen-textarea"></textarea>
-                </div>
-                <div class="admin-doelen-category" style="margin-bottom: 16px;">
-                    <label style="margin: 0 0 6px 0; font-size: 0.8rem; display: flex; align-items: center; gap: 6px;">
-                        <span style="width: 10px; height: 10px; border-radius: 2px; background: var(--color-reken); display: inline-block;"></span>
-                        Rekenontwikkeling
-                    </label>
-                    <textarea id="adminDoelenReken" class="admin-doelen-textarea"></textarea>
-                </div>
-                <div class="admin-doelen-category" style="margin-bottom: 16px;">
-                    <label style="margin: 0 0 6px 0; font-size: 0.8rem; display: flex; align-items: center; gap: 6px;">
-                        <span style="width: 10px; height: 10px; border-radius: 2px; background: var(--color-motoriek); display: inline-block;"></span>
-                        Motoriek
-                    </label>
-                    <textarea id="adminDoelenMotoriek" class="admin-doelen-textarea"></textarea>
-                </div>
-                <div class="admin-doelen-category">
-                    <label style="margin: 0 0 6px 0; font-size: 0.8rem; display: flex; align-items: center; gap: 6px;">
-                        <span style="width: 10px; height: 10px; border-radius: 2px; background: var(--color-werkhouding); display: inline-block;"></span>
-                        Werkhouding & Sociaal-emotioneel
-                    </label>
-                    <textarea id="adminDoelenWerkhouding" class="admin-doelen-textarea"></textarea>
-                </div>
-            </div>
-
-            <div class="admin-actions">
-                <button class="admin-btn-reset" onclick="resetStyles()"><i class="fa-solid fa-rotate-left"></i>&ensp;Reset</button>
-                <button class="admin-btn-apply" onclick="applyAdminStyles()"><i class="fa-solid fa-check"></i>&ensp;Toepassen</button>
-            </div>
-
-            <div style="margin-top: 16px; padding-top: 20px; border-top: 1px solid #27272a;">
-                <button onclick="generateNewHTML()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #005a55, #00a19a); color: white; border: none; border-radius: 6px; font-size: 0.875rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.15s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
-                    <i class="fa-solid fa-download"></i> Genereer nieuw HTML bestand
-                </button>
-                <p style="font-size: 0.7rem; color: #52525b; margin: 8px 0 0 0; text-align: center;">Download een nieuwe versie met al je instellingen ingebakken</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    /*
-     * ADMIN PASSWORD
-     * Default admin password: "admin123"
-     */
-    const ADMIN_PASSWORD_HASH = 'efde772847bf0442f6dc131297714006f529507ee3fa268c61e5194b010ba05c'; // "4V*xJfcdZfI7TC"
-    let adminAuthenticated = false;
-
-    // Store current hashes (mutable for password change within session)
-    let currentLoginHash = CORRECT_PASSWORD_HASH;
-    let currentAdminHash = ADMIN_PASSWORD_HASH;
-
-    function openAdmin() {
-        const modal = document.getElementById('adminModal');
-        modal.classList.remove('hidden');
-        
-        if (adminAuthenticated) {
-            document.getElementById('adminLoginView').classList.add('hidden');
-            document.getElementById('adminPanelView').classList.remove('hidden');
-        } else {
-            document.getElementById('adminLoginView').classList.remove('hidden');
-            document.getElementById('adminPanelView').classList.add('hidden');
-            setTimeout(() => document.getElementById('adminPwInput').focus(), 100);
-        }
-    }
-
-    function closeAdmin() {
-        document.getElementById('adminModal').classList.add('hidden');
-        document.getElementById('adminPwInput').value = '';
-        document.getElementById('adminPwMsg').textContent = '';
-    }
-
-    async function checkAdminPassword() {
-        const input = document.getElementById('adminPwInput');
-        const msg = document.getElementById('adminPwMsg');
-        const hash = await sha256(input.value);
-
-        if (hash === currentAdminHash) {
-            adminAuthenticated = true;
-            document.getElementById('adminLoginView').classList.add('hidden');
-            document.getElementById('adminPanelView').classList.remove('hidden');
-            loadCurrentStyles();
-        } else {
-            input.style.borderColor = '#e53935';
-            input.style.boxShadow = '0 0 0 2px rgba(229,57,53,0.25)';
-            msg.textContent = 'Onjuist admin wachtwoord.';
-            setTimeout(() => {
-                input.style.borderColor = '#27272a';
-                input.style.boxShadow = 'none';
-            }, 400);
-            input.value = '';
-            input.focus();
-        }
-    }
-
-    function updateHex(input, spanId) {
-        document.getElementById(spanId).textContent = input.value;
-    }
-
-    function loadCurrentStyles() {
-        const root = getComputedStyle(document.documentElement);
-        document.getElementById('adminColorGroen').value = rgbToHex(root.getPropertyValue('--wijngaard-groen').trim());
-        document.getElementById('adminColorTeal').value = rgbToHex(root.getPropertyValue('--wijngaard-teal').trim());
-        document.getElementById('adminColorTaal').value = rgbToHex(root.getPropertyValue('--color-taal').trim());
-        document.getElementById('adminColorReken').value = rgbToHex(root.getPropertyValue('--color-reken').trim());
-        document.getElementById('adminColorMotoriek').value = rgbToHex(root.getPropertyValue('--color-motoriek').trim());
-        document.getElementById('adminColorWerkhouding').value = rgbToHex(root.getPropertyValue('--color-werkhouding').trim());
-
-        // Update hex displays
-        document.querySelectorAll('.admin-row input[type="color"]').forEach(input => {
-            const hexSpan = input.parentElement.querySelector('.color-hex');
-            if (hexSpan) hexSpan.textContent = input.value;
-        });
-        
-        // Load footer text
-        const footerEls = document.querySelectorAll('.footer-title');
-        if (footerEls.length > 0) {
-            document.getElementById('adminFooterText').value = footerEls[0].textContent;
-        }
-
-        // Load logo preview
-        const logoEl = document.getElementById('logoImg');
-        if (logoEl && logoEl.src) {
-            document.getElementById('adminLogoPreview').src = logoEl.src;
-        }
-
-        // Load page title
-        document.getElementById('adminPageTitle').value = document.title;
-
-        // Load school name from sidebar header
-        document.getElementById('adminSchoolName').value = document.querySelector('.sidebar h2').textContent;
-
-        // Load copyright
-        const copyrightEl = document.querySelector('.copyright');
-        if (copyrightEl) {
-            const copyrightText = copyrightEl.textContent.replace(/©\s*\d{4}\s*/, '').trim();
-            document.getElementById('adminCopyright').value = copyrightText;
-        }
-
-        // Load doelen into textareas
-        document.getElementById('adminDoelenTaal').value = assessmentData.taal.map(i => i.text).join('\n');
-        document.getElementById('adminDoelenReken').value = assessmentData.reken.map(i => i.text).join('\n');
-        document.getElementById('adminDoelenMotoriek').value = assessmentData.motoriek.map(i => i.text).join('\n');
-        document.getElementById('adminDoelenWerkhouding').value = assessmentData.werkhouding.map(i => i.text).join('\n');
-    }
-
-    function rgbToHex(color) {
-        if (color.startsWith('#')) return color.length === 4 
-            ? '#' + color[1]+color[1]+color[2]+color[2]+color[3]+color[3] 
-            : color;
-        const match = color.match(/\d+/g);
-        if (!match) return color;
-        return '#' + match.slice(0,3).map(n => parseInt(n).toString(16).padStart(2,'0')).join('');
-    }
-
-    async function applyAdminStyles() {
-        const root = document.documentElement;
-
-        // Apply colors
-        root.style.setProperty('--wijngaard-groen', document.getElementById('adminColorGroen').value);
-        root.style.setProperty('--wijngaard-teal', document.getElementById('adminColorTeal').value);
-        root.style.setProperty('--color-taal', document.getElementById('adminColorTaal').value);
-        root.style.setProperty('--color-reken', document.getElementById('adminColorReken').value);
-        root.style.setProperty('--color-motoriek', document.getElementById('adminColorMotoriek').value);
-        root.style.setProperty('--color-werkhouding', document.getElementById('adminColorWerkhouding').value);
-
-        // Apply font
-        const font = document.getElementById('adminFont').value;
-        document.querySelectorAll('.a4-page').forEach(p => p.style.fontFamily = font);
-
-        // Apply title size
-        const titleSize = document.getElementById('adminTitleSize').value;
-        document.querySelectorAll('.title-group h1').forEach(h => h.style.fontSize = titleSize);
-
-        // Apply tape color
-        const tapeColor = document.getElementById('adminTapeColor').value;
-        document.querySelectorAll('.tape').forEach(t => t.style.background = tapeColor);
-
-        // Apply polaroid bg
-        const polaroidBg = document.getElementById('adminPolaroidBg').value;
-        document.querySelectorAll('.polaroid').forEach(p => p.style.background = polaroidBg);
-
-        // Apply page bg
-        const pageBg = document.getElementById('adminPageBg').value;
-        document.querySelectorAll('.a4-page').forEach(p => p.style.background = pageBg);
-
-        // Apply footer text
-        const footerText = document.getElementById('adminFooterText').value;
-        document.querySelectorAll('.footer-title').forEach(f => f.textContent = footerText);
-
-        // Apply logo
-        const logoPreview = document.getElementById('adminLogoPreview');
-        if (logoPreview.src && logoPreview.src !== window.location.href) {
-            logoBase64 = logoPreview.src;
-            document.querySelectorAll('.logo-img').forEach(img => img.src = logoBase64);
-        }
-
-        // Apply school name
-        const schoolName = document.getElementById('adminSchoolName').value;
-        document.querySelector('.sidebar h2').textContent = schoolName;
-
-        // Apply page title
-        document.title = document.getElementById('adminPageTitle').value;
-
-        // Apply copyright
-        const copyrightName = document.getElementById('adminCopyright').value;
-        const copyrightEl = document.querySelector('.copyright');
-        if (copyrightEl) {
-            copyrightEl.innerHTML = `© <span id="copyrightYear">${new Date().getFullYear()}</span> ${copyrightName}`;
-        }
-
-        // Apply doelen
-        applyDoelen();
-
-        // Update passwords if set
-        const newLoginPw = document.getElementById('adminNewLoginPw').value;
-        const newAdminPw = document.getElementById('adminNewAdminPw').value;
-        if (newLoginPw) {
-            currentLoginHash = await sha256(newLoginPw);
-            // Override the check in the login overlay
-            document.getElementById('adminNewLoginPw').value = '';
-        }
-        if (newAdminPw) {
-            currentAdminHash = await sha256(newAdminPw);
-            document.getElementById('adminNewAdminPw').value = '';
-        }
-
-        // Save to localStorage
-        saveAdminSettings();
-
-        showToast('Stijl instellingen toegepast!');
-    }
-
-    function resetStyles() {
-        const root = document.documentElement;
-        
-        // Reset CSS variables
-        root.style.setProperty('--wijngaard-groen', '#005a55');
-        root.style.setProperty('--wijngaard-teal', '#00a19a');
-        root.style.setProperty('--color-taal', '#e53935');
-        root.style.setProperty('--color-reken', '#43a047');
-        root.style.setProperty('--color-motoriek', '#8e24aa');
-        root.style.setProperty('--color-werkhouding', '#fb8c00');
-
-        // Reset fonts
-        document.querySelectorAll('.a4-page').forEach(p => p.style.fontFamily = '');
-        document.querySelectorAll('.title-group h1').forEach(h => h.style.fontSize = '');
-        
-        // Reset tape & polaroid
-        document.querySelectorAll('.tape').forEach(t => t.style.background = '');
-        document.querySelectorAll('.polaroid').forEach(p => p.style.background = '');
-        document.querySelectorAll('.a4-page').forEach(p => p.style.background = '');
-
-        // Reset footer text
-        document.querySelectorAll('.footer-title').forEach(f => f.textContent = 'Kijk eens wat ik al kan!');
-
-        // Reset form fields
-        document.getElementById('adminColorGroen').value = '#005a55';
-        document.getElementById('adminColorTeal').value = '#00a19a';
-        document.getElementById('adminColorTaal').value = '#e53935';
-        document.getElementById('adminColorReken').value = '#43a047';
-        document.getElementById('adminColorMotoriek').value = '#8e24aa';
-        document.getElementById('adminColorWerkhouding').value = '#fb8c00';
-        document.getElementById('adminTapeColor').value = '#005a55';
-        document.getElementById('adminPolaroidBg').value = '#e8e8e8';
-        document.getElementById('adminPageBg').value = '#ffffff';
-        document.getElementById('adminFont').value = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
-        document.getElementById('adminTitleSize').value = '2.2em';
-        document.getElementById('adminFooterText').value = 'Kijk eens wat ik al kan!';
-
-        // Reset branding
-        document.getElementById('adminSchoolName').value = 'Rapport Maker';
-        document.querySelector('.sidebar h2').textContent = 'Rapport Maker';
-        document.getElementById('adminPageTitle').value = 'Rapport Generator - De Wijngaard';
-        document.title = 'Rapport Generator - De Wijngaard';
-        document.getElementById('adminCopyright').value = 'Jazz Bauer';
-        const cpEl = document.querySelector('.copyright');
-        if (cpEl) cpEl.innerHTML = `© <span id="copyrightYear">${new Date().getFullYear()}</span> Jazz Bauer`;
-
-        // Update hex displays
-        document.querySelectorAll('.admin-row input[type="color"]').forEach(input => {
-            const hexSpan = input.parentElement.querySelector('.color-hex');
-            if (hexSpan) hexSpan.textContent = input.value;
-        });
-
-        // Clear saved settings
-        try { localStorage.removeItem('adminStyles'); } catch(e) {}
-
-        showToast('Stijl teruggezet naar standaard!');
-    }
-
-    function showToast(msg) {
-        const existing = document.querySelector('.admin-toast');
-        if (existing) existing.remove();
-        const toast = document.createElement('div');
-        toast.className = 'admin-toast';
-        toast.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${msg}`;
-        document.body.appendChild(toast);
-        setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; }, 2000);
-        setTimeout(() => toast.remove(), 2300);
-    }
-
-    function previewAdminLogo(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function() {
-            document.getElementById('adminLogoPreview').src = reader.result;
-        };
-        reader.readAsDataURL(file);
-    }
-
-    function applyDoelen() {
-        const parseDoel = (text) => text.split('\n').map(l => l.trim()).filter(l => l).map(t => ({ text: t, rating: 3 }));
-        
-        assessmentData.taal = parseDoel(document.getElementById('adminDoelenTaal').value);
-        assessmentData.reken = parseDoel(document.getElementById('adminDoelenReken').value);
-        assessmentData.motoriek = parseDoel(document.getElementById('adminDoelenMotoriek').value);
-        assessmentData.werkhouding = parseDoel(document.getElementById('adminDoelenWerkhouding').value);
-        
-        // Rebuild rating inputs
-        buildRatingInputs('taalItems', assessmentData.taal, 'taal');
-        buildRatingInputs('rekenItems', assessmentData.reken, 'reken');
-        buildRatingInputs('motoriekItems', assessmentData.motoriek, 'motoriek');
-        buildRatingInputs('werkhoudingItems', assessmentData.werkhouding, 'werkhouding');
-        
-        updateAssessmentOutput();
-    }
-
-    async function generateNewHTML() {
-        showToast('HTML wordt gegenereerd...');
-        
-        // Get the current document HTML
-        let html = document.documentElement.outerHTML;
-        
-        // We'll build a clean version by modifying the current page source
-        // First, collect all current settings
-        const settings = collectAllSettings();
-        
-        // Fetch the original page source and patch it
-        const parser = new DOMParser();
-        const doc = parser.parseFromString('<!DOCTYPE html>\n' + html, 'text/html');
-        
-        // 1. Update CSS variables in the style
-        const styleEl = doc.querySelector('style');
-        if (styleEl) {
-            let css = styleEl.textContent;
-            css = css.replace(/--wijngaard-groen:\s*[^;]+/, `--wijngaard-groen: ${settings.groen}`);
-            css = css.replace(/--wijngaard-teal:\s*[^;]+/, `--wijngaard-teal: ${settings.teal}`);
-            css = css.replace(/--color-taal:\s*[^;]+/, `--color-taal: ${settings.taal}`);
-            css = css.replace(/--color-reken:\s*[^;]+/, `--color-reken: ${settings.reken}`);
-            css = css.replace(/--color-motoriek:\s*[^;]+/, `--color-motoriek: ${settings.motoriek}`);
-            css = css.replace(/--color-werkhouding:\s*[^;]+/, `--color-werkhouding: ${settings.werkhouding}`);
-            styleEl.textContent = css;
-        }
-        
-        // 2. Update page title
-        doc.title = settings.pageTitle;
-        
-        // 3. Update logo base64 in script
-        const scripts = doc.querySelectorAll('script:not([src])');
-        for (const script of scripts) {
-            if (script.textContent.includes('const logoBase64')) {
-                script.textContent = script.textContent.replace(
-                    /const logoBase64\s*=\s*"[^"]*"/,
-                    `const logoBase64 = "${settings.logoBase64}"`
-                );
-            }
-            // Update assessment data
-            if (script.textContent.includes('const assessmentData')) {
-                const buildItems = (items) => items.map(i => 
-                    `            { text: ${JSON.stringify(i.text)}, rating: 3 }`
-                ).join(',\n');
-                
-                const newAssessmentData = `const assessmentData = {
-        taal: [
-${buildItems(settings.assessmentDoelen.taal)}
-        ],
-        reken: [
-${buildItems(settings.assessmentDoelen.reken)}
-        ],
-        motoriek: [
-${buildItems(settings.assessmentDoelen.motoriek)}
-        ],
-        werkhouding: [
-${buildItems(settings.assessmentDoelen.werkhouding)}
-        ]
-    }`;
-                script.textContent = script.textContent.replace(
-                    /const assessmentData\s*=\s*\{[\s\S]*?\n    \}/,
-                    newAssessmentData
-                );
-            }
-            // Update password hashes
-            if (script.textContent.includes('CORRECT_PASSWORD_HASH')) {
-                script.textContent = script.textContent.replace(
-                    /const CORRECT_PASSWORD_HASH\s*=\s*'[^']*'/,
-                    `const CORRECT_PASSWORD_HASH = '${settings.loginHash}'`
-                );
-            }
-            if (script.textContent.includes('ADMIN_PASSWORD_HASH')) {
-                script.textContent = script.textContent.replace(
-                    /const ADMIN_PASSWORD_HASH\s*=\s*'[^']*'/,
-                    `const ADMIN_PASSWORD_HASH = '${settings.adminHash}'`
-                );
-            }
-        }
-        
-        // 4. Update sidebar title
-        const sidebarH2 = doc.querySelector('.sidebar h2');
-        if (sidebarH2) sidebarH2.textContent = settings.schoolName;
-        
-        // 5. Update footer titles
-        doc.querySelectorAll('.footer-title').forEach(f => f.textContent = settings.footerText);
-        
-        // 6. Update copyright
-        const cpEl = doc.querySelector('.copyright');
-        if (cpEl) cpEl.innerHTML = `© <span id="copyrightYear"></span> ${settings.copyrightName}`;
-        
-        // 7. Clean up: remove app-locked class, remove inline styles from runtime
-        doc.body.classList.remove('app-locked');
-        doc.body.classList.add('app-locked');
-        doc.querySelectorAll('.a4-page').forEach(p => {
-            if (settings.font && settings.font !== "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif") {
-                p.style.fontFamily = settings.font;
-            } else {
-                p.style.fontFamily = '';
-            }
-            if (settings.pageBg && settings.pageBg !== '#ffffff') {
-                p.style.background = settings.pageBg;
-            } else {
-                p.style.background = '';
-            }
-        });
-        doc.querySelectorAll('.title-group h1').forEach(h => {
-            if (settings.titleSize && settings.titleSize !== '2.2em') {
-                h.style.fontSize = settings.titleSize;
-            } else {
-                h.style.fontSize = '';
-            }
-        });
-        doc.querySelectorAll('.tape').forEach(t => {
-            if (settings.tapeColor && settings.tapeColor !== '#005a55') {
-                t.style.background = settings.tapeColor;
-            } else {
-                t.style.background = '';
-            }
-        });
-        doc.querySelectorAll('.polaroid').forEach(p => {
-            if (settings.polaroidBg && settings.polaroidBg !== '#e8e8e8') {
-                p.style.background = settings.polaroidBg;
-            } else {
-                p.style.background = '';
-            }
-        });
-        
-        // 8. Reset form values in the clone (clear student data)
-        const resetInput = (id) => { const el = doc.getElementById(id); if (el) el.value = ''; };
-        resetInput('inNaam'); resetInput('inDocent'); resetInput('inFeedback');
-        resetInput('t1'); resetInput('t2');
-        const yearInput = doc.getElementById('inJaar');
-        if (yearInput) yearInput.value = '';
-        
-        // Reset images
-        ['img1', 'img2', 'img1b'].forEach(id => {
-            const el = doc.getElementById(id);
-            if (el) { el.src = ''; el.style.transform = ''; }
-        });
-        
-        // Reset logo images to use logoBase64 (will be set on load)
-        ['logoImg', 'logoImg2', 'logoImg3'].forEach(id => {
-            const el = doc.getElementById(id);
-            if (el) el.src = '';
-        });
-        
-        // Reset hidden states
-        const g2 = doc.getElementById('groep2Report');
-        if (g2) g2.classList.add('hidden');
-        const g1 = doc.getElementById('groep1Report');
-        if (g1) g1.classList.remove('hidden');
-        const ai = doc.getElementById('assessmentInputs');
-        if (ai) ai.classList.add('hidden');
-        
-        // Close admin modal in export
-        const adminModal = doc.getElementById('adminModal');
-        if (adminModal) adminModal.classList.add('hidden');
-        const adminLogin = doc.getElementById('adminLoginView');
-        if (adminLogin) adminLogin.classList.remove('hidden');
-        const adminPanel = doc.getElementById('adminPanelView');
-        if (adminPanel) adminPanel.classList.add('hidden');
-        
-        // Build final HTML
-        const finalHTML = '<!DOCTYPE html>\n<html lang="nl">\n' + doc.documentElement.innerHTML + '\n</html>';
-        
-        // Download
-        const blob = new Blob([finalHTML], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        const schoolSlug = settings.schoolName.replace(/\s+/g, '_').toLowerCase();
-        a.download = `rapport_generator_${schoolSlug}.html`;
-        a.click();
-        URL.revokeObjectURL(url);
-        
-        showToast('HTML bestand gedownload!');
-    }
-
-    function collectAllSettings() {
-        return {
-            groen: document.getElementById('adminColorGroen').value,
-            teal: document.getElementById('adminColorTeal').value,
-            taal: document.getElementById('adminColorTaal').value,
-            reken: document.getElementById('adminColorReken').value,
-            motoriek: document.getElementById('adminColorMotoriek').value,
-            werkhouding: document.getElementById('adminColorWerkhouding').value,
-            font: document.getElementById('adminFont').value,
-            titleSize: document.getElementById('adminTitleSize').value,
-            tapeColor: document.getElementById('adminTapeColor').value,
-            polaroidBg: document.getElementById('adminPolaroidBg').value,
-            pageBg: document.getElementById('adminPageBg').value,
-            footerText: document.getElementById('adminFooterText').value,
-            loginHash: currentLoginHash,
-            adminHash: currentAdminHash,
-            logoBase64: logoBase64,
-            schoolName: document.getElementById('adminSchoolName').value,
-            pageTitle: document.getElementById('adminPageTitle').value,
-            copyrightName: document.getElementById('adminCopyright').value,
-            assessmentDoelen: {
-                taal: assessmentData.taal,
-                reken: assessmentData.reken,
-                motoriek: assessmentData.motoriek,
-                werkhouding: assessmentData.werkhouding
-            }
-        };
-    }
-
-    function saveAdminSettings() {
-        try {
-            const settings = {
-                groen: document.getElementById('adminColorGroen').value,
-                teal: document.getElementById('adminColorTeal').value,
-                taal: document.getElementById('adminColorTaal').value,
-                reken: document.getElementById('adminColorReken').value,
-                motoriek: document.getElementById('adminColorMotoriek').value,
-                werkhouding: document.getElementById('adminColorWerkhouding').value,
-                font: document.getElementById('adminFont').value,
-                titleSize: document.getElementById('adminTitleSize').value,
-                tapeColor: document.getElementById('adminTapeColor').value,
-                polaroidBg: document.getElementById('adminPolaroidBg').value,
-                pageBg: document.getElementById('adminPageBg').value,
-                footerText: document.getElementById('adminFooterText').value,
-                loginHash: currentLoginHash,
-                adminHash: currentAdminHash,
-                logoBase64: logoBase64,
-                schoolName: document.getElementById('adminSchoolName').value,
-                pageTitle: document.getElementById('adminPageTitle').value,
-                copyrightName: document.getElementById('adminCopyright').value,
-                doelenTaal: assessmentData.taal.map(i => i.text),
-                doelenReken: assessmentData.reken.map(i => i.text),
-                doelenMotoriek: assessmentData.motoriek.map(i => i.text),
-                doelenWerkhouding: assessmentData.werkhouding.map(i => i.text)
-            };
-            localStorage.setItem('adminStyles', JSON.stringify(settings));
-        } catch(e) {}
-    }
-
-    function loadAdminSettings() {
-        try {
-            const saved = localStorage.getItem('adminStyles');
-            if (!saved) return;
-            const s = JSON.parse(saved);
-            const root = document.documentElement;
-
-            if (s.groen) root.style.setProperty('--wijngaard-groen', s.groen);
-            if (s.teal) root.style.setProperty('--wijngaard-teal', s.teal);
-            if (s.taal) root.style.setProperty('--color-taal', s.taal);
-            if (s.reken) root.style.setProperty('--color-reken', s.reken);
-            if (s.motoriek) root.style.setProperty('--color-motoriek', s.motoriek);
-            if (s.werkhouding) root.style.setProperty('--color-werkhouding', s.werkhouding);
-
-            if (s.font) document.querySelectorAll('.a4-page').forEach(p => p.style.fontFamily = s.font);
-            if (s.titleSize) document.querySelectorAll('.title-group h1').forEach(h => h.style.fontSize = s.titleSize);
-            if (s.tapeColor) document.querySelectorAll('.tape').forEach(t => t.style.background = s.tapeColor);
-            if (s.polaroidBg) document.querySelectorAll('.polaroid').forEach(p => p.style.background = s.polaroidBg);
-            if (s.pageBg) document.querySelectorAll('.a4-page').forEach(p => p.style.background = s.pageBg);
-            if (s.footerText) document.querySelectorAll('.footer-title').forEach(f => f.textContent = s.footerText);
-
-            // Restore password hashes
-            if (s.loginHash) currentLoginHash = s.loginHash;
-            if (s.adminHash) currentAdminHash = s.adminHash;
-
-            // Restore logo
-            if (s.logoBase64) {
-                logoBase64 = s.logoBase64;
-                document.querySelectorAll('.logo-img').forEach(img => img.src = logoBase64);
-            }
-
-            // Restore branding
-            if (s.schoolName) document.querySelector('.sidebar h2').textContent = s.schoolName;
-            if (s.pageTitle) document.title = s.pageTitle;
-            if (s.copyrightName) {
-                const cpEl = document.querySelector('.copyright');
-                if (cpEl) cpEl.innerHTML = `© <span id="copyrightYear">${new Date().getFullYear()}</span> ${s.copyrightName}`;
-            }
-
-            // Restore doelen
-            const parseSaved = (arr) => arr.map(t => ({ text: t, rating: 3 }));
-            if (s.doelenTaal) {
-                assessmentData.taal = parseSaved(s.doelenTaal);
-                buildRatingInputs('taalItems', assessmentData.taal, 'taal');
-            }
-            if (s.doelenReken) {
-                assessmentData.reken = parseSaved(s.doelenReken);
-                buildRatingInputs('rekenItems', assessmentData.reken, 'reken');
-            }
-            if (s.doelenMotoriek) {
-                assessmentData.motoriek = parseSaved(s.doelenMotoriek);
-                buildRatingInputs('motoriekItems', assessmentData.motoriek, 'motoriek');
-            }
-            if (s.doelenWerkhouding) {
-                assessmentData.werkhouding = parseSaved(s.doelenWerkhouding);
-                buildRatingInputs('werkhoudingItems', assessmentData.werkhouding, 'werkhouding');
-            }
-            updateAssessmentOutput();
-        } catch(e) {}
-    }
-
-    // Load saved admin settings on page load
-    document.addEventListener('DOMContentLoaded', loadAdminSettings);
-</script>
-
-<!-- Override login password check to use mutable hash -->
-<script>
-    // Patch the login check to use the potentially updated hash
-    const _origCheckPassword = checkPassword;
-    checkPassword = async function() {
-        const input = document.getElementById('pwInput');
-        const msg = document.getElementById('pwMsg');
-        const hash = await sha256(input.value);
-
-        if (hash === currentLoginHash) {
-            const overlay = document.getElementById('pwOverlay');
-            overlay.classList.add('fade-out');
-            document.body.classList.remove('app-locked');
-            setTimeout(() => overlay.remove(), 400);
-        } else {
-            input.classList.add('pw-error');
-            msg.textContent = 'Onjuist wachtwoord. Probeer het opnieuw.';
-            setTimeout(() => input.classList.remove('pw-error'), 400);
-            input.value = '';
-            input.focus();
-        }
-    };
-</script>
 
 <!-- Help Modal -->
 <div id="helpModal" class="modal-overlay hidden" onclick="closeHelp(event)">
